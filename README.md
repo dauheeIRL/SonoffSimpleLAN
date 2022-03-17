@@ -12,5 +12,11 @@ So how I got here was I used https://github.com/mattsaxon/pysonofflan which was 
 
 So basically what this script is a NON-asyncio copy of the library I mentioned above - that library itself is a copy of a copy etc so we are standing on the shoulders of giants here.
 
-This script works for me, its actually lightening fast and faster than the asyncio version. It still has some embedded dependancies on pysonofflanR3 so you will need to install that - but the only thing is I have fixed up a few asyncio things in it so you will need to take from https://github.com/dauheeIRL/pysonofflan (mine) if you want to use any of the asyncio stuff.
+This script works for me, its actually lightening fast and faster than the asyncio version. It still has some embedded dependancies on pysonofflanR3 using utils and crypto stuff which is non asyncio, so you will need to install that
+
+So basically, if you want to just turn stuff on/off, you can see the comment in my script
+
+but the only thing is I have fixed up a few asyncio things in it so you will need to take from https://github.com/dauheeIRL/pysonofflan (mine) if you want to use any of the asyncio stuff like basically have additional monitoring to get an event raised if a switch is turned on/off at the physical switch - this can be usefull for something like having a dummy outlet/channel that you can get to perform a different action i.e. turn lightswitch on and send a tweet
+
+If there is some poor soul out there that is in the same situation as me, having a need but not enough skills, by all means ask me a question. Asyncio butchered my noodle and I couldn't maintain the fork of pysonofflanr3 any more, but still love my sonoff switches and didn't want to have to go flashing them with custom firmware
 
