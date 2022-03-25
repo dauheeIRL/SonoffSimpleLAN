@@ -72,7 +72,15 @@ def change_switch(api_key, device_id, ip_address, outlet, on_request):
 
         http_session = create_http_session()
         http_session = set_retries(http_session)
-        response = send(http_session, get_update_payload(api_key, device_id, {"switch": on_request, "outlet": int(outlet)}), 'http://' + ip_address + ":8081/zeroconf/switch")
+
+        if outlet == None:
+            #no outlet so we assume not strip device
+            response = send(http_session, get_update_payload(api_key, device_id, {"switch": on_request, "outlet": int(0)}), 'http://' + ip_address + ":8081/zeroconf/switch")
+        else:
+            params = {"switches": [{"switch": "x", "outlet": 0}]}
+            params["switches"][0]["switch"] = on_request
+            params["switches"][0]["outlet"] = int(outlet)
+            response = send(http_session, get_update_payload(api_key, device_id, params), 'http://' + ip_address + ":8081/zeroconf/switches")
         
         response_json = json.loads(response.content.decode("utf-8"))
 
@@ -86,9 +94,9 @@ def change_switch(api_key, device_id, ip_address, outlet, on_request):
 
 
 '''
-ip_address = '192.168.x.x'
-api_key = 'xxxxxx'
-device_id = '' #not really required so you don't need to supply it
-outlet=0 #for things like multi channel wall switches
+ip_address = '192.168.1.107'
+api_key = '8cc35b2c-d8c9-4eae-817a-68096a3e3e70'
+device_id = '100073bdf7' #not really required
+outlet=None #or integer if is strip socket
 err = change_switch(api_key, device_id, ip_address, outlet, str("ON").lower())
 '''
