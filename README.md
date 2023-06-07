@@ -1,7 +1,7 @@
 # SonoffSimpleLAN
 Non async control of Sonoff switches
 
-This is a really raw file, but works perfectly for me.
+Works perfectly for me - just plonk the 2 py files into your folder
 
 so if you are here, you can do a little coding in python. there are a number of libraries out there:
 -some for the older unencrypted firmware version of sonoff
@@ -12,7 +12,7 @@ So how I got here was I used https://github.com/mattsaxon/pysonofflan which was 
 
 So basically what this script is a NON-asyncio copy of the library I mentioned above - that library itself is a copy of a copy etc so we are standing on the shoulders of giants here.
 
-This script works for me, its actually lightening fast and faster than the asyncio version. It still has some embedded dependancies on pysonofflanR3 using utils and crypto stuff which is non asyncio, so you will need to install that
+This script works for me, its actually lightening fast and faster than the asyncio version. It has no embedded dependancies but if doesn't run, make sure to install any includes in the files
 
 So basically, if you want to just turn stuff on/off, you can see the comment in my script
 
