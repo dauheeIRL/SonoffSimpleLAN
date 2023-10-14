@@ -95,11 +95,19 @@ def change_switch(api_key, device_id, ip_address, outlet, on_request):
 
 
 def BeginMonitoringSonoffDevices(callbackfunc, dictDevices):
-    zeroconf = Zeroconf()
-    listener = sonoffListener(callbackfunc, dictDevices)
-    browser = ServiceBrowser(zeroconf, "_ewelink._tcp.local.", listener)
-    while True:  
-        time.sleep(600)
+    #import logging
+    #logging.getLogger('zeroconf').setLevel(logging.DEBUG)
+    while True:
+        zeroconf = Zeroconf()
+        listener = sonoffListener(callbackfunc, dictDevices)
+        browser = ServiceBrowser(zeroconf, "_ewelink._tcp.local.", listener)
+        time.sleep(60 * 30)
+        browser.cancel()
+        zeroconf.browsers.clear()
+        zeroconf.close()
+        
+        
+        
 
 class sonoffListener(ServiceListener):
     import sonoffcrypto
@@ -140,15 +148,18 @@ class sonoffListener(ServiceListener):
         self.actionSonoffEvent(zc, type_, name)
 
 '''
-ip_address = '192.168.1.0'
-api_key = '54554454-d8c9-4eae-817a-45541245'
-device_id = '545512457' #not really required
+ip_address = '192.168.1.107'
+api_key = '8cc35b2c-d8c9-4eae-817a-68096a3e3e70'
+device_id = '100073bdf7' #not really required
 outlet=None #or integer if is strip socket
 err = change_switch(api_key, device_id, ip_address, outlet, str("ON").lower())
 
 
 to monitor just call:
 import sonoffsimpleLAN
+dictNewSonoff = {}
+dictNewSonoff[devID] = (apikey, deviceIPAddress, outlet)
+
 try:
     sonoffsimpleLAN.BeginMonitoringSonoffDevices(SonoffCallback, dictNewSonoff)
 except:
@@ -158,6 +169,8 @@ where SonoffCallback:
 
 def SonoffCallback(device, data):
     try:
+        print(device)
+        print(data)
         if 'switches' in data:
             
             for sw in data['switches']:
@@ -171,6 +184,6 @@ def SonoffCallback(device, data):
             #do some stuff
 
     except:
-        log_error(traceback.format_exc())
+        pass #handle error
 
 '''
